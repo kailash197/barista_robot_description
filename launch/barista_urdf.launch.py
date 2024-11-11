@@ -119,13 +119,14 @@ def generate_launch_description():
     # create and return launch description object
     return LaunchDescription(
         [            
-            DeclareLaunchArgument(
-            'world',
-            default_value=[os.path.join(pkg_gazebo_ros, 'worlds', 'empty.world'), ''],
-            description='SDF world file'),
-            gazebo,
+            # DeclareLaunchArgument(
+            # 'world',
+            # default_value=[os.path.join(pkg_gazebo_ros, 'worlds', 'empty.world'), ''],
+            # description='SDF world file'),
+            # gazebo,
             robot_state_publisher_node,
-            rviz_node,
-            spawn_robot
+            rviz_node
+            # rviz_node,
+            # spawn_robot
         ]
     )

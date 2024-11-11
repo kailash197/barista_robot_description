@@ -26,9 +26,99 @@
         </inertial>
     </link>
 
-    <!-- <joint name="left_wheel_joint" type="continuous">
-        <origin rpy="0 0 0" xyz="0 0 0" />
-        <parent link="base_plate_link" />
-        <child link="base_plate_link" />
-    </joint> -->
+    <joint name="standoff_rods1_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="0.03 0.13 0.1875"/>
+        <parent link="base_plate_link"/>
+        <child link="standoff_rods1_link"/>
+    </joint>
+    
+    <link name="standoff_rods1_link">
+        <visual>
+            <geometry>
+                <cylinder length="0.220" radius="0.010"/>
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder length="0.220" radius="0.010"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.05"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <inertia ixx="0.0008333333333333335" ixy="0" ixz="0" iyy="0.0008333333333333335" iyz="0" izz="0.0008333333333333335"/>
+        </inertial>
+    </link>
+
+    <joint name="standoff_rods2_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="-0.03 0.13 0.1875"/>
+        <parent link="base_plate_link"/>
+        <child link="standoff_rods2_link"/>
+    </joint>
+    
+    <link name="standoff_rods2_link">
+        <visual>
+            <geometry>
+                <cylinder length="0.220" radius="0.010"/>
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder length="0.220" radius="0.010"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.05"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <inertia ixx="0.0008333333333333335" ixy="0" ixz="0" iyy="0.0008333333333333335" iyz="0" izz="0.0008333333333333335"/>
+        </inertial>
+    </link>
+
+    <joint name="standoff_rods3_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="-0.03 -0.13 0.1875"/>
+        <parent link="base_plate_link"/>
+        <child link="standoff_rods3_link"/>
+    </joint>
+    
+    <link name="standoff_rods3_link">
+        <visual>
+            <geometry>
+                <cylinder length="0.220" radius="0.010"/>
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder length="0.220" radius="0.010"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.05"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <inertia ixx="0.0008333333333333335" ixy="0" ixz="0" iyy="0.0008333333333333335" iyz="0" izz="0.0008333333333333335"/>
+        </inertial>
+    </link>
+
+    <joint name="standoff_rods4_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="0.03 -0.13 0.1875"/>
+        <parent link="base_plate_link"/>
+        <child link="standoff_rods4_link"/>
+    </joint>
+    
+    <link name="standoff_rods4_link">
+        <visual>
+            <geometry>
+                <cylinder length="0.220" radius="0.010"/>
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder length="0.220" radius="0.010"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.05"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <inertia ixx="0.0008333333333333335" ixy="0" ixz="0" iyy="0.0008333333333333335" iyz="0" izz="0.0008333333333333335"/>
+        </inertial>
+    </link>
 </robot>

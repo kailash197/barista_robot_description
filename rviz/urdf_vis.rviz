@@ -50,7 +50,7 @@ Visualization Manager:
       Plane Cell Count: 10
       Reference Frame: <Fixed Frame>
       Value: true
-    - Alpha: 1
+    - Alpha: 0.699999988079071
       Class: rviz_default_plugins/RobotModel
       Collision Enabled: false
       Description File: ""
@@ -77,6 +77,11 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        standoff_rods1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
       Mass Properties:
         Inertia: false
         Mass: false
@@ -94,6 +99,8 @@ Visualization Manager:
           Value: true
         base_plate_link:
           Value: true
+        standoff_rods1_link:
+          Value: true
       Marker Scale: 0.30000001192092896
       Name: TF
       Show Arrows: true
@@ -102,7 +109,8 @@ Visualization Manager:
       Tree:
         base_link:
           base_plate_link:
-            {}
+            standoff_rods1_link:
+              {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -185,7 +193,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 5.338974952697754
+      Distance: 1.4869096279144287
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -200,10 +208,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.8203979730606079
+      Pitch: 0.3703979551792145
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.748579025268555
+      Yaw: 0.9704002141952515
     Saved: ~
 Window Geometry:
   Displays:
