@@ -115,18 +115,24 @@ def generate_launch_description():
                    '-topic', '/robot_description'
                    ]
     )
+    # Joint State Publisher
+    joint_state_publisher_node = Node(
+        package='joint_state_publisher_gui',
+        executable='joint_state_publisher_gui',
+        name='joint_state_publisher'
+    )
 
     # create and return launch description object
     return LaunchDescription(
         [            
-            # DeclareLaunchArgument(
-            # 'world',
-            # default_value=[os.path.join(pkg_gazebo_ros, 'worlds', 'empty.world'), ''],
-            # description='SDF world file'),
-            # gazebo,
+            DeclareLaunchArgument(
+            'world',
+            default_value=[os.path.join(pkg_gazebo_ros, 'worlds', 'empty.world'), ''],
+            description='SDF world file'),
+            gazebo,
+            spawn_robot,
             robot_state_publisher_node,
+            joint_state_publisher_node,
             rviz_node
-            # rviz_node,
-            # spawn_robot
         ]
     )
