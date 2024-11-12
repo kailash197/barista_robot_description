@@ -40,7 +40,7 @@
     <joint name="left_wheel_joint" type="continuous">
         <parent link="base_plate_link"/>
         <child link="left_wheel_link"/>
-        <origin xyz="0.0 0.15 -0.060" rpy="-1.57 0 0"/>
+        <origin xyz="0.0 0.15 -0.0528" rpy="-1.57 0 0"/>
         <axis rpy="0 0 0" xyz="0 0 1"/>
         <limit effort="10000" velocity="1000"/>
         <joint_properties damping="1.0" friction="1.0"/>        
@@ -72,7 +72,7 @@
     <joint name="right_wheel_joint" type="continuous">
         <parent link="base_plate_link"/>
         <child link="right_wheel_link"/>
-        <origin xyz="0.0 -0.15 -0.060" rpy="-1.57 0 0"/>
+        <origin xyz="0.0 -0.15 -0.0528" rpy="-1.57 0 0"/>
         <axis rpy="0 0 0" xyz="0 0 1"/>
         <limit effort="10000" velocity="1000"/>
         <joint_properties damping="1.0" friction="1.0"/>        
@@ -105,14 +105,14 @@
         <visual>
             <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
             <geometry>
-                <cylinder length="0.005" radius="0.010"/>
+                <cylinder length="0.005" radius="0.0150"/>
             </geometry>
             <material name="blue"/>
         </visual>
     </link>
 
     <joint name="front_yaw_joint" type="continuous">
-        <origin rpy="0 0 0" xyz="0.150 0 -0.075" />
+        <origin rpy="0 0 0" xyz="0.150 0 -0.0730" />
         <parent link="base_plate_link" />
         <child link="front_yaw_link" />
         <axis xyz="0 0 1" />
@@ -124,7 +124,7 @@
         <visual>
             <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
             <geometry>
-                <cylinder length="0.005" radius="0.010"/>
+                <cylinder length="0.005" radius="0.0150"/>
             </geometry>
             <material name="red"/>
         </visual>
@@ -143,7 +143,7 @@
         <visual>
             <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
             <geometry>
-                <sphere radius="0.010"/>
+                <sphere radius="0.0150"/>
             </geometry>
             <material name="green_dark"/>
         </visual>
@@ -163,14 +163,14 @@
         <visual>
             <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
             <geometry>
-                <cylinder length="0.005" radius="0.010"/>
+                <cylinder length="0.005" radius="0.0150"/>
             </geometry>
             <material name="blue"/>
         </visual>
     </link>
 
     <joint name="back_yaw_joint" type="continuous">
-        <origin rpy="0 0 0" xyz="-0.150 0 -0.075" />
+        <origin rpy="0 0 0" xyz="-0.150 0 -0.0730" />
         <parent link="base_plate_link" />
         <child link="back_yaw_link" />
         <axis xyz="0 0 1" />
@@ -182,7 +182,7 @@
         <visual>
             <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
             <geometry>
-                <cylinder length="0.005" radius="0.010"/>
+                <cylinder length="0.005" radius="0.0150"/>
             </geometry>
             <material name="red"/>
         </visual>
@@ -201,7 +201,7 @@
         <visual>
             <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
             <geometry>
-                <sphere radius="0.010"/>
+                <sphere radius="0.0150"/>
             </geometry>
             <material name="green_dark"/>
         </visual>
@@ -371,8 +371,8 @@
         <right_joint>right_wheel_joint</right_joint>
 
         <!-- kinematics -->
-        <wheel_separation>0.1</wheel_separation>
-        <wheel_diameter>0.07</wheel_diameter>
+        <wheel_separation>0.300</wheel_separation>
+        <wheel_diameter>0.0704</wheel_diameter>
 
         <!-- limits -->
         <max_wheel_torque>1.0</max_wheel_torque>
