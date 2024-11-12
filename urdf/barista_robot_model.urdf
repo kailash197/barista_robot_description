@@ -52,6 +52,7 @@
             <geometry>
                 <cylinder length="0.0206" radius="0.0352"/>
             </geometry>
+            <material name="blue"/>
         </visual>
 
         <collision>
@@ -84,6 +85,7 @@
             <geometry>
                 <cylinder length="0.0206" radius="0.0352"/>
             </geometry>
+            <material name="blue"/>
         </visual>
 
         <collision>
@@ -337,6 +339,7 @@
         </inertial>
     </link>
 
+    <!-- Visual Laser Model to be rotated -->
     <joint name="laser_scanner_joint" type="continuous">
         <origin rpy="0 0 0" xyz="0.10 0.0 0.09125"/>
         <parent link="base_plate_link"/>
@@ -347,7 +350,8 @@
     <link name="laser_scanner_link">
         <visual>
             <geometry>
-                <cylinder length="0.0275" radius="0.030"/>
+                <!-- <cylinder length="0.0275" radius="0.030"/> -->
+                <mesh filename="package://barista_robot_description/meshes/hokuyo_urg_04lx.dae" scale="1.0 1.0 1.0"/>
             </geometry>
         </visual>
         <collision>
