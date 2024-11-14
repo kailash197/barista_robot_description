@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="joint_state_publisher_plugin" params="robot_name rate joints">
+        <gazebo>
+            <plugin name="${robot_name}_joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
+                <ros>
+                    <remapping>~/out:=joint_states</remapping>
+                </ros>
+                <update_rate>${rate}</update_rate>
+                <xacro:joints_loop joints="${joints}"/>
+            </plugin>
+        </gazebo>
+    </xacro:macro>
+
+    <xacro:macro name="joints_loop" params="joints:=^">
+        <xacro:if value="${joints}">
+            <!-- pop first item from list -->
+            <xacro:property name="item" value="${joints.pop(0)}"/>
+            <joint_name>${item}</joint_name>
+            <!-- recursive call -->
+            <xacro:joints_loop/>
+        </xacro:if>
+    </xacro:macro>
+    <!-- Sample Macro call -->
+    <!-- <xacro:joint_state_publisher_plugin 
+        robot_name="barista_bot"
+        rate="50" 
+        joints="${[
+            'left_wheel_joint', 
+            'right_wheel_joint'
+        ]}"/> -->
+</robot>
