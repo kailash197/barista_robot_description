@@ -3,4 +3,7 @@
   <material name="Blue">
       <color rgba="0.0 0.0 1.0 1"/>
   </material>
+  <material name="White">
+      <color rgba="1 1 1 1"/>
+  </material>
 </robot>
