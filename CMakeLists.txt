@@ -29,6 +29,7 @@ install(
     rviz
     meshes
     config
+    xacro
   DESTINATION
     share/${PROJECT_NAME}/
 )
