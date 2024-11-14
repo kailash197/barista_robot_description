@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="barista_bot">
+    <!-- Include -->
+    <xacro:include filename="$(find barista_robot_description)/xacro/rviz_materials.xacro"/>
+
+    <!-- Properties -->
+    <xacro:property name="base_plate_mass" value="0.8"/>
+    <xacro:property name="base_plate_radius" value="0.178"/>
+    <xacro:property name="base_plate_length" value="0.155"/>
+    <!-- Calculated inertial properties -->
+    <xacro:property name="ixx" value="${(1/12.0) * base_plate_mass * (3 * pow(base_plate_radius, 2) + pow(base_plate_length, 2))}"/>
+    <xacro:property name="iyy" value="${(1/12.0) * base_plate_mass * (3 * pow(base_plate_radius, 2) + pow(base_plate_length, 2))}"/>
+    <xacro:property name="izz" value="${0.5 * base_plate_mass * pow(base_plate_radius, 2)}"/>
+
+    <link name="base_link"/>
+    <link name="base_plate_link">
+        <visual>
+            <geometry>
+                <cylinder radius="${base_plate_radius}" length="${base_plate_length}"/>
+            </geometry>
+            <material name="Blue"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${base_plate_radius}" length="${base_plate_length}"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="${base_plate_mass}"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <inertia ixx="${ixx}" iyy="${iyy}" izz="${izz}" ixy="0" iyz="0" ixz="0"/>
+        </inertial>
+    </link>
+    <gazebo reference="base_plate_link">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+    <joint name="base_link_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="base_plate_link"/>
+    </joint>
+</robot>

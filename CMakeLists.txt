@@ -29,6 +29,7 @@ install(
     rviz
     meshes
     worlds
+    xacro
   DESTINATION
     share/${PROJECT_NAME}/
 )
