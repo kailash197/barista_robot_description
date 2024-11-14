@@ -5,8 +5,10 @@
     <xacro:include filename="$(find barista_robot_description)/xacro/standoff_rods.xacro"/>
     <xacro:include filename="$(find barista_robot_description)/xacro/cup_holder_tray.xacro"/>
     <xacro:include filename="$(find barista_robot_description)/xacro/drive_wheels.xacro"/>
+    <xacro:include filename="$(find barista_robot_description)/xacro/gazebo_plugins.xacro"/>
 
     <!-- Properties -->
+    <xacro:property name="robot_name" value="barista_bot"/>
     <xacro:property name="base_plate_mass" value="0.8"/>
     <xacro:property name="base_plate_radius" value="0.178"/>
     <xacro:property name="base_plate_length" value="0.155"/>
@@ -97,4 +99,11 @@
         <limit effort="10000" velocity="1000"/>
         <joint_properties damping="1.0" friction="1.0"/>
     </joint>
+    <xacro:joint_state_publisher_plugin
+        robot_name="${robot_name}"
+        rate="50"
+        joints="${[
+            'left_wheel_joint',
+            'right_wheel_joint'
+        ]}"/>
 </robot>
