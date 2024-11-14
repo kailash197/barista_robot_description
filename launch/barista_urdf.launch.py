@@ -79,7 +79,7 @@ def generate_launch_description():
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
-        name='barista_bot_robot_state_publisher_node',
+        name='barista_bot_state_publisher_node',
         emulate_tty=True,
         parameters=[{'use_sim_time': True, 'robot_description': Command(['xacro ', robot_desc_path])}],
         output="screen"
@@ -117,8 +117,8 @@ def generate_launch_description():
     )
     # Joint State Publisher
     joint_state_publisher_node = Node(
-        package='joint_state_publisher_gui',
-        executable='joint_state_publisher_gui',
+        package='joint_state_publisher',
+        executable='joint_state_publisher',
         name='joint_state_publisher'
     )
 
@@ -129,10 +129,54 @@ def generate_launch_description():
             'world',
             default_value=[os.path.join(pkg_gazebo_ros, 'worlds', 'empty.world'), ''],
             description='SDF world file'),
-            gazebo,
-            spawn_robot,
             robot_state_publisher_node,
             joint_state_publisher_node,
-            rviz_node
+            rviz_node,
+            gazebo,
+            spawn_robot
         ]
     )
+
+# #!/usr/bin/python3
+# # -*- coding: utf-8 -*-
+# from launch_ros.actions import Node
+# from launch import LaunchDescription
+
+
+# # this is the function launch  system will look for
+
+
+# def generate_launch_description():
+
+
+#     spawn_controller = Node(
+#         package="controller_manager",
+#         executable="spawner",
+#         arguments=["joint_state_broadcaster"],
+#         output="screen",
+#     )
+
+#     spawn_controller_traj = Node(
+#         package="controller_manager",
+#         executable="spawner",
+#         arguments=["joint_trajectory_controller"],
+#         output="screen",
+#     )
+
+#     spawn_controller_velocity = Node(
+#         package="controller_manager",
+#         executable="spawner",
+#         arguments=["velocity_controller"],
+#         output="screen",
+#     )
+
+    
+
+#     # create and return launch description object
+#     return LaunchDescription(
+#         [
+#             spawn_controller,
+#             spawn_controller_traj,
+#             spawn_controller_velocity
+#         ]
+#     )

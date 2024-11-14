@@ -9,6 +9,7 @@ Panels:
         - /RobotModel1
         - /RobotModel1/Description Topic1
         - /TF1
+        - /LaserScan1
       Splitter Ratio: 0.5
     Tree Height: 824
   - Class: rviz_common/Selection
@@ -28,7 +29,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: ""
+    SyncSource: LaserScan
 Visualization Manager:
   Class: ""
   Displays:
@@ -68,6 +69,21 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
+        back_pitch_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        back_roll_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        back_yaw_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         base_link:
           Alpha: 1
           Show Axes: false
@@ -77,7 +93,61 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        cup_holder_tray_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        front_pitch_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        front_roll_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        front_yaw_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        laser_scan_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        laser_scanner_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_wheel_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_wheel_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         standoff_rods1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        standoff_rods2_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        standoff_rods3_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        standoff_rods4_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -95,11 +165,41 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
+        back_pitch_link:
+          Value: true
+        back_roll_link:
+          Value: true
+        back_yaw_link:
+          Value: true
         base_link:
           Value: true
         base_plate_link:
           Value: true
+        cup_holder_tray_link:
+          Value: true
+        front_pitch_link:
+          Value: true
+        front_roll_link:
+          Value: true
+        front_yaw_link:
+          Value: true
+        laser_scan_frame:
+          Value: true
+        laser_scanner_link:
+          Value: true
+        left_wheel_link:
+          Value: true
+        odom:
+          Value: true
+        right_wheel_link:
+          Value: true
         standoff_rods1_link:
+          Value: true
+        standoff_rods2_link:
+          Value: true
+        standoff_rods3_link:
+          Value: true
+        standoff_rods4_link:
           Value: true
       Marker Scale: 0.30000001192092896
       Name: TF
@@ -109,8 +209,34 @@ Visualization Manager:
       Tree:
         base_link:
           base_plate_link:
+            back_yaw_link:
+              back_roll_link:
+                back_pitch_link:
+                  {}
+            cup_holder_tray_link:
+              {}
+            front_yaw_link:
+              front_roll_link:
+                front_pitch_link:
+                  {}
+            laser_scan_frame:
+              {}
+            laser_scanner_link:
+              {}
+            left_wheel_link:
+              {}
+            right_wheel_link:
+              {}
             standoff_rods1_link:
               {}
+            standoff_rods2_link:
+              {}
+            standoff_rods3_link:
+              {}
+            standoff_rods4_link:
+              {}
+        odom:
+          {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -143,7 +269,7 @@ Visualization Manager:
         Filter size: 10
         History Policy: Keep Last
         Reliability Policy: Best Effort
-        Value: /box_bot/laser_scan
+        Value: /laser_scan
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
