@@ -4,6 +4,7 @@
     <xacro:include filename="$(find barista_robot_description)/xacro/rviz_materials.xacro"/>
     <xacro:include filename="$(find barista_robot_description)/xacro/standoff_rods.xacro"/>
     <xacro:include filename="$(find barista_robot_description)/xacro/cup_holder_tray.xacro"/>
+    <xacro:include filename="$(find barista_robot_description)/xacro/drive_wheels.xacro"/>
 
     <!-- Properties -->
     <xacro:property name="base_plate_mass" value="0.8"/>
@@ -74,5 +75,26 @@
         <origin rpy="0 0 0" xyz="0 0 0.3425"/>
         <parent link="base_plate_link"/>
         <child link="cup_holder_tray_link"/>
+    </joint>
+
+    <!-- Wheel Left and Right -->
+    <xacro:wheel name="left_wheel_link" color="Black"/>
+    <xacro:wheel name="right_wheel_link" color="Black"/>
+    <!-- Wheel Left and Right Joints-->
+    <joint name="left_wheel_joint" type="continuous">
+        <parent link="base_plate_link"/>
+        <child link="left_wheel_link"/>
+        <origin xyz="0.0 0.15 -0.053" rpy="-1.57 0 0"/>
+        <axis rpy="0 0 0" xyz="0 0 1"/>
+        <limit effort="10000" velocity="1000"/>
+        <joint_properties damping="1.0" friction="1.0"/>
+    </joint>
+    <joint name="right_wheel_joint" type="continuous">
+        <parent link="base_plate_link"/>
+        <child link="right_wheel_link"/>
+        <origin xyz="0.0 -0.15 -0.053" rpy="-1.57 0 0"/>
+        <axis rpy="0 0 0" xyz="0 0 1"/>
+        <limit effort="10000" velocity="1000"/>
+        <joint_properties damping="1.0" friction="1.0"/>
     </joint>
 </robot>
