@@ -3,6 +3,7 @@
     <!-- Include -->
     <xacro:include filename="$(find barista_robot_description)/xacro/rviz_materials.xacro"/>
     <xacro:include filename="$(find barista_robot_description)/xacro/standoff_rods.xacro"/>
+    <xacro:include filename="$(find barista_robot_description)/xacro/cup_holder_tray.xacro"/>
 
     <!-- Properties -->
     <xacro:property name="base_plate_mass" value="0.8"/>
@@ -65,5 +66,13 @@
         <origin rpy="0 0 0" xyz="0.03 -0.13 0.1875"/>
         <parent link="base_plate_link"/>
         <child link="standoff_rods4_link"/>
+    </joint>
+
+    <!-- Cup Holder Tray -->
+    <xacro:cup_holder_tray name="cup_holder_tray_link" color="Blue"/>
+    <joint name="cup_holder_tray_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="0 0 0.3425"/>
+        <parent link="base_plate_link"/>
+        <child link="cup_holder_tray_link"/>
     </joint>
 </robot>
