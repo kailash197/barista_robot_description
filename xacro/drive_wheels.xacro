@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Wheel macro -->
+  <xacro:macro name="wheel" params="name color">
+    <xacro:property name="wheel_radius" value="0.0352"/>
+    <xacro:property name="wheel_width" value="0.0206"/>
+    <xacro:property name="wheel_mass" value="0.07"/>
+    <!-- Calculated inertial properties -->
+    <xacro:property name="ixx" value="${(1/12.0) * wheel_mass * (3 * pow(wheel_radius, 2) + pow(wheel_width, 2))}"/>
+    <xacro:property name="iyy" value="${(1/12.0) * wheel_mass * (3 * pow(wheel_radius, 2) + pow(wheel_width, 2))}"/>
+    <xacro:property name="izz" value="${0.5 * wheel_mass * pow(wheel_radius, 2)}"/>
+
+    <link name="${name}">
+      <visual>
+        <geometry>
+          <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+        </geometry>
+        <material name="${color}"/>
+      </visual>
+
+      <collision>
+        <geometry>
+          <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+        </geometry>
+      </collision>
+
+      <inertial>
+        <mass value="${wheel_mass}"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <inertia ixx="${ixx}" iyy="${iyy}" izz="${izz}" ixy="0" iyz="0" ixz="0"/>
+      </inertial>
+
+    </link>
+    <gazebo reference="${name}">
+        <material>Gazebo/${color}</material>
+    </gazebo>
+    
+  </xacro:macro>
+</robot>
