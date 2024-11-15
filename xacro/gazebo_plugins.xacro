@@ -57,4 +57,38 @@
             </plugin>
         </gazebo>
     </xacro:macro>
+
+    <!-- Laser Scanner Plugin -->
+    <xacro:macro name="laser_scanner_plugin" params="link_name out_topic">
+        <gazebo reference="${link_name}">
+            <sensor name="sensor_ray" type="ray">
+                <pose>0 0 0 0 0 0</pose>
+                <ray>
+                    <scan>
+                        <horizontal>
+                            <samples>720</samples>
+                            <resolution>0.5</resolution>
+                            <min_angle>-3.1416</min_angle>
+                            <max_angle>3.1416</max_angle>
+                        </horizontal>
+                    </scan>
+                    <range>
+                        <min>0.07</min>
+                        <max>10.0</max>
+                        <resolution>0.01</resolution>
+                    </range>
+                </ray>
+                <always_on>true</always_on>
+                <visualize>true</visualize>
+                <update_rate>50.0</update_rate>
+                <plugin name="laser" filename="libgazebo_ros_ray_sensor.so">
+                    <ros>
+                        <!-- <namespace>/barista_bot</namespace> -->
+                        <remapping>~/out:=${out_topic}</remapping>
+                    </ros>
+                    <output_type>sensor_msgs/LaserScan</output_type>
+                </plugin>
+            </sensor>
+        </gazebo>
+    </xacro:macro>
 </robot>

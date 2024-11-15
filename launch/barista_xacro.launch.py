@@ -76,7 +76,13 @@ def generate_launch_description():
         executable='robot_state_publisher',
         name='barista_bot_robot_state_publisher_node',
         emulate_tty=True,
-        parameters=[{'use_sim_time': True, 'robot_description': Command(['xacro ', robot_desc_path])}]
+        parameters=[{
+            'use_sim_time': True,
+            'robot_description': Command([
+                'xacro ', robot_desc_path, ' ',
+                'include_laser:=true'
+            ])
+        }]
     )
 
     # RVIZ Configuration
