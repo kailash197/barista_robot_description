@@ -106,4 +106,12 @@
             'left_wheel_joint',
             'right_wheel_joint'
         ]}"/>
+    <xacro:differential_drive_controller_plugin
+        robot_name="${robot_name}"
+        base_frame="base_link" 
+        left_joint="left_wheel_joint"
+        right_joint="right_wheel_joint"
+        separation="0.30"
+        diameter="0.0704" />
+
 </robot>
