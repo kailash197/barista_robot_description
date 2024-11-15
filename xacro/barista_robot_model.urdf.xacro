@@ -6,6 +6,7 @@
     <xacro:include filename="$(find barista_robot_description)/xacro/cup_holder_tray.xacro"/>
     <xacro:include filename="$(find barista_robot_description)/xacro/drive_wheels.xacro"/>
     <xacro:include filename="$(find barista_robot_description)/xacro/gazebo_plugins.xacro"/>
+    <xacro:include filename="$(find barista_robot_description)/xacro/caster_wheels.xacro"/>
 
     <!-- Properties -->
     <xacro:property name="robot_name" value="barista_bot"/>
@@ -99,13 +100,6 @@
         <limit effort="10000" velocity="1000"/>
         <joint_properties damping="1.0" friction="1.0"/>
     </joint>
-    <xacro:joint_state_publisher_plugin
-        robot_name="${robot_name}"
-        rate="50"
-        joints="${[
-            'left_wheel_joint',
-            'right_wheel_joint'
-        ]}"/>
     <xacro:differential_drive_controller_plugin
         robot_name="${robot_name}"
         base_frame="base_link" 
@@ -113,5 +107,33 @@
         right_joint="right_wheel_joint"
         separation="0.30"
         diameter="0.0704" />
-
+    <xacro:caster_wheels prefix="front"
+        pos_x="0.150"
+        pos_y="0"
+        pos_z="-0.0730"
+        parent_link="base_plate_link"
+        color_roll="Red"
+        color_pitch="Green"
+        color_yaw="Blue" />
+    <xacro:caster_wheels prefix="back"
+        pos_x="-0.150"
+        pos_y="0"
+        pos_z="-0.0730"
+        parent_link="base_plate_link"
+        color_roll="Red" 
+        color_pitch="Green" 
+        color_yaw="Blue" />
+    <xacro:joint_state_publisher_plugin
+        robot_name="${robot_name}"
+        rate="50"
+        joints="${[
+            'left_wheel_joint',
+            'right_wheel_joint',
+            'front_roll_joint',
+            'front_pitch_joint',
+            'front_yaw_joint',
+            'back_roll_joint',
+            'back_pitch_joint',
+            'back_yaw_joint'
+        ]}"/>
 </robot>
