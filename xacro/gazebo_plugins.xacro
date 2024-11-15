@@ -29,4 +29,32 @@
             'left_wheel_joint', 
             'right_wheel_joint'
         ]}"/> -->
+
+    <!-- Differential drive -->
+    <xacro:macro name="differential_drive_controller_plugin" params="robot_name base_frame left_joint right_joint separation diameter">
+        <gazebo>
+            <plugin filename="libgazebo_ros_diff_drive.so" name="${robot_name}_differential_drive_controller">
+
+            <!-- wheels -->
+            <left_joint>${left_joint}</left_joint>
+            <right_joint>${right_joint}</right_joint>
+
+            <!-- kinematics -->
+            <wheel_separation>${separation}</wheel_separation>
+            <wheel_diameter>${diameter}</wheel_diameter>
+
+            <!-- limits -->
+            <max_wheel_torque>1.0</max_wheel_torque>
+            <max_wheel_acceleration>2.0</max_wheel_acceleration>
+
+            <!-- output -->
+            <publish_odom>true</publish_odom>
+            <publish_odom_tf>true</publish_odom_tf>
+
+            <odometry_frame>odom</odometry_frame>
+            <robot_base_frame>${base_frame}</robot_base_frame>
+
+            </plugin>
+        </gazebo>
+    </xacro:macro>
 </robot>
