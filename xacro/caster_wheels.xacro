@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:macro name="caster_wheels" params="prefix parent_link pos_x pos_y pos_z color_roll color_pitch color_yaw">
+        <xacro:property name="radius" value="0.0150"/>
+        <xacro:property name="width" value="0.0050"/>
+        <xacro:property name="mass_roll" value="0.0015"/>
+        <xacro:property name="mass_pitch" value="0.0020"/>
+        <xacro:property name="mass_yaw" value="0.0015"/>
+        <!-- Calculated inertial properties -->
+        <xacro:property name="ixx_roll" value="${(1/12.0) * mass_roll * (3 * pow(radius, 2) + pow(width, 2))}"/>
+        <xacro:property name="iyy_roll" value="${(1/12.0) * mass_roll * (3 * pow(radius, 2) + pow(width, 2))}"/>
+        <xacro:property name="izz_roll" value="${0.5 * mass_roll * pow(radius, 2)}"/>
+
+        <xacro:property name="inertia_pitch" value="${(2/5.0) * mass_pitch * pow(radius, 2)}"/>
+
+        <xacro:property name="ixx_yaw" value="${(1/12.0) * mass_yaw * (3 * pow(radius, 2) + pow(width, 2))}"/>
+        <xacro:property name="iyy_yaw" value="${(1/12.0) * mass_yaw * (3 * pow(radius, 2) + pow(width, 2))}"/>
+        <xacro:property name="izz_yaw" value="${0.5 * mass_yaw * pow(radius, 2)}"/>
+        
+        <link name="${prefix}_roll_link">
+            <visual>
+                <origin rpy="1.5707 0 1.5707" xyz="0 0 0"/>
+                <geometry>
+                    <cylinder radius="${radius}" length="${width}"/>
+                </geometry>
+                <material name="${color_roll}"/>
+            </visual>
+
+            <collision>
+                <geometry>
+                    <cylinder radius="${radius}" length="${width}"/>
+                </geometry>
+            </collision>
+
+            <inertial>
+                <mass value="${mass_roll}"/>
+                <origin rpy="1.5707 0 1.5707" xyz="0 0 0"/>
+                <inertia ixx="${ixx_roll}" iyy="${iyy_roll}" izz="${izz_roll}" ixy="0" iyz="0" ixz="0"/>
+            </inertial>
+        </link>
+        <gazebo reference="${prefix}_roll_link">
+            <material>Gazebo/${color_roll}</material>
+        </gazebo>
+        
+        <link name="${prefix}_pitch_link">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="${radius}"/>
+                </geometry>
+                <material name="${color_pitch}"/>
+            </visual>
+
+            <collision>
+                <geometry>
+                    <sphere radius="${radius}"/>
+                </geometry>
+            </collision>
+
+            <inertial>
+                <origin rpy="0 0 0" xyz="0 0 0"/>                    
+                <mass value="${mass_pitch}"/>
+                <inertia ixx="${inertia_pitch}" iyy="${inertia_pitch}" izz="${inertia_pitch}" ixy="0" iyz="0" ixz="0"/>
+            </inertial>
+        </link>
+        <gazebo reference="${prefix}_pitch_link">
+            <material>Gazebo/${color_pitch}</material>
+        </gazebo>
+
+        <link name="${prefix}_yaw_link">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <cylinder radius="${radius}" length="${width}"/>
+                </geometry>
+                <material name="${color_yaw}"/>
+            </visual>
+
+            <collision>
+                <geometry>
+                    <cylinder radius="${radius}" length="${width}"/>
+                </geometry>
+            </collision>
+
+            <inertial>
+                <mass value="${mass_yaw}"/>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <inertia ixx="${ixx_yaw}" iyy="${iyy_yaw}" izz="${izz_yaw}" ixy="0" iyz="0" ixz="0"/>
+            </inertial>
+
+        </link>
+        <gazebo reference="${prefix}_yaw_link">
+            <material>Gazebo/${color_yaw}</material>
+        </gazebo>
+
+        <joint name="${prefix}_yaw_joint" type="continuous">
+            <origin rpy="0 0 0" xyz="${pos_x} ${pos_y} ${pos_z}" />
+            <parent link="${parent_link}" />
+            <child link="${prefix}_yaw_link" />
+            <axis xyz="0 0 1" />
+            <limit effort="1000.0" velocity="100.0" />
+            <dynamics damping="0.0" friction="0.1"/>
+        </joint>
+        <joint name="${prefix}_roll_joint" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <parent link="${prefix}_yaw_link" />
+            <child link="${prefix}_roll_link" />
+            <axis xyz="1 0 0" />
+            <limit effort="1000.0" velocity="100.0" />
+            <dynamics damping="0.0" friction="0.1"/>
+        </joint>
+        <joint name="${prefix}_pitch_joint" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <parent link="${prefix}_roll_link" />
+            <child link="${prefix}_pitch_link" />
+            <axis xyz="0 1 0" />
+            <limit effort="1000.0" velocity="100.0" />
+            <dynamics damping="0.0" friction="0.1"/>
+        </joint>         
+    </xacro:macro>
+</robot>
