@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <!-- Laser Scanner Macro -->
+    <xacro:macro name="laser_scanner" params="name color ray_pos">
+        <xacro:property name="mass_scanner" value="0.0100"/>
+        <xacro:property name="radius_scanner" value="0.0300"/>
+        <xacro:property name="length_scanner" value="0.0275"/>
+        <!-- Calculated inertial properties -->
+        <xacro:property name="ixx" value="${(1/12.0) * mass_scanner * (3 * pow(radius_scanner, 2) + pow(length_scanner, 2))}"/>
+        <xacro:property name="iyy" value="${(1/12.0) * mass_scanner * (3 * pow(radius_scanner, 2) + pow(length_scanner, 2))}"/>
+        <xacro:property name="izz" value="${0.5 * mass_scanner * pow(radius_scanner, 2)}"/>
+
+        <!-- Link representation of the visual geometry -->
+        <link name="${name}_link">
+            <visual>
+                <geometry>
+                    <mesh filename="package://barista_robot_description/meshes/hokuyo_urg_04lx.dae" scale="1.0 1.0 1.0"/>
+                </geometry>
+                <material name="${color}"/>
+            </visual>
+
+            <collision>
+                <geometry>
+                    <cylinder radius="${radius_scanner}" length="${length_scanner}"/>
+                </geometry>
+            </collision>
+
+            <inertial>
+                <mass value="${mass_scanner}"/>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <inertia ixx="${ixx}" iyy="${iyy}" izz="${izz}" ixy="0" iyz="0" ixz="0"/>
+            </inertial>
+
+        </link>        
+        <gazebo reference="${name}_link">
+            <material>Gazebo/${color}</material>
+        </gazebo>    
+
+        <!-- Link representation of the laser rays -->
+        <link name="${name}_ray_link"/>
+        <joint name="${name}_ray_joint" type="fixed">
+            <origin rpy="0 0 0" xyz="${ray_pos}"/>
+            <parent link="${name}_link" />
+            <child link="${name}_ray_link" />
+        </joint>
+
+    </xacro:macro>
+</robot>

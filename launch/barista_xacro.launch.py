@@ -9,6 +9,7 @@ from launch.substitutions import Command
 from launch_ros.actions import Node
 from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
+from launch.actions import TimerAction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 '''
@@ -76,7 +77,13 @@ def generate_launch_description():
         executable='robot_state_publisher',
         name='barista_bot_robot_state_publisher_node',
         emulate_tty=True,
-        parameters=[{'use_sim_time': True, 'robot_description': Command(['xacro ', robot_desc_path])}]
+        parameters=[{
+            'use_sim_time': True,
+            'robot_description': Command([
+                'xacro ', robot_desc_path, ' ',
+                'include_laser:=true'
+            ])
+        }]
     )
 
     # RVIZ Configuration
@@ -89,14 +96,23 @@ def generate_launch_description():
             parameters=[{'use_sim_time': True}],
             arguments=['-d', rviz_config_dir])
 
+    spawn_robot_with_delay = TimerAction(
+        period=1.0,  # Wait 1 seconds after Gazebo starts
+        actions=[spawn_robot]
+    )
+    rviz_with_delay = TimerAction(
+        period=4.0,  # Wait 4 second after starting the robot_state_publisher
+        actions=[rviz_node]
+    )
+
     # create and return launch description object
     return LaunchDescription(
         [   DeclareLaunchArgument( 'world',
             default_value=[os.path.join(share_dir, 'worlds', 'barista_world.world'), ''],
             description='SDF world file'),
             gazebo,
-            spawn_robot,
             robot_state_publisher_node,
-            rviz_node
+            spawn_robot_with_delay,
+            rviz_with_delay
         ]
     )

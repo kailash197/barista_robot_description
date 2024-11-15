@@ -9,7 +9,7 @@ Panels:
         - /RobotModel1
         - /TF1
         - /LaserScan1
-        - /LaserScan1/Topic1
+        - /LaserScan1/Autocompute Value Bounds1
       Splitter Ratio: 0.5
     Tree Height: 797
   - Class: rviz_common/Selection
@@ -161,89 +161,25 @@ Visualization Manager:
       Value: true
       Visual Enabled: true
     - Class: rviz_default_plugins/TF
-      Enabled: true
+      Enabled: false
       Frame Timeout: 15
       Frames:
         All Enabled: true
-        back_pitch_link:
-          Value: true
-        back_roll_link:
-          Value: true
-        back_yaw_link:
-          Value: true
-        base_link:
-          Value: true
-        base_plate_link:
-          Value: true
-        cup_holder_tray_link:
-          Value: true
-        front_pitch_link:
-          Value: true
-        front_roll_link:
-          Value: true
-        front_yaw_link:
-          Value: true
-        laser_scanner_link:
-          Value: true
-        laser_scanner_ray_link:
-          Value: true
-        left_wheel_link:
-          Value: true
-        odom:
-          Value: true
-        right_wheel_link:
-          Value: true
-        standoff_rods1_link:
-          Value: true
-        standoff_rods2_link:
-          Value: true
-        standoff_rods3_link:
-          Value: true
-        standoff_rods4_link:
-          Value: true
       Marker Scale: 0.30000001192092896
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: false
       Tree:
-        base_link:
-          base_plate_link:
-            back_yaw_link:
-              back_roll_link:
-                back_pitch_link:
-                  {}
-            cup_holder_tray_link:
-              {}
-            front_yaw_link:
-              front_roll_link:
-                front_pitch_link:
-                  {}
-            laser_scanner_link:
-              laser_scanner_ray_link:
-                {}
-            left_wheel_link:
-              {}
-            right_wheel_link:
-              {}
-            standoff_rods1_link:
-              {}
-            standoff_rods2_link:
-              {}
-            standoff_rods3_link:
-              {}
-            standoff_rods4_link:
-              {}
-        odom:
-          {}
+        {}
       Update Interval: 0
-      Value: true
+      Value: false
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 5.446238040924072
-        Min Value: -6.087283134460449
-        Value: true
+        Max Value: 10
+        Min Value: 0.699999988079071
+        Value: false
       Axis: X
       Channel Name: intensity
       Class: rviz_default_plugins/LaserScan
@@ -259,9 +195,9 @@ Visualization Manager:
       Name: LaserScan
       Position Transformer: XYZ
       Selectable: true
-      Size (Pixels): 3
-      Size (m): 0.009999999776482582
-      Style: Flat Squares
+      Size (Pixels): 4
+      Size (m): 0.019999999552965164
+      Style: Spheres
       Topic:
         Depth: 5
         Durability Policy: Volatile
@@ -318,25 +254,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 3.594621181488037
+      Distance: 2.8827898502349854
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0
-        Y: 0
-        Z: 0
+        X: 0.09707517921924591
+        Y: 0.38942569494247437
+        Z: 0.3419839143753052
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.5103979110717773
+      Pitch: 0.6153980493545532
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.8154003620147705
+      Yaw: 0.9053992629051208
     Saved: ~
 Window Geometry:
   Displays:

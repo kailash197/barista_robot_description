@@ -7,6 +7,10 @@
     <xacro:include filename="$(find barista_robot_description)/xacro/drive_wheels.xacro"/>
     <xacro:include filename="$(find barista_robot_description)/xacro/gazebo_plugins.xacro"/>
     <xacro:include filename="$(find barista_robot_description)/xacro/caster_wheels.xacro"/>
+    <xacro:include filename="$(find barista_robot_description)/xacro/laser_scanner.xacro"/>
+
+    <!-- Arguments -->
+    <xacro:arg name="include_laser" default="true"/>
 
     <!-- Properties -->
     <xacro:property name="robot_name" value="barista_bot"/>
@@ -123,6 +127,23 @@
         color_roll="Red" 
         color_pitch="Green" 
         color_yaw="Blue" />
+
+    <!-- Laser Scanner -->
+    <xacro:if value="$(arg include_laser)">
+        <xacro:laser_scanner
+            name="laser_scanner"
+            color="Green"
+            ray_pos="0.0 0.0 0.047" />
+        <joint name="laser_scanner_joint" type="fixed">
+            <origin rpy="0 0 0" xyz="0.10 0.0 0.0775"/>
+            <parent link="base_plate_link"/>
+            <child link="laser_scanner_link"/>
+        </joint>
+        <xacro:laser_scanner_plugin
+            link_name="laser_scanner_ray_link"
+            out_topic="scan"/>
+    </xacro:if>
+
     <xacro:joint_state_publisher_plugin
         robot_name="${robot_name}"
         rate="50"
