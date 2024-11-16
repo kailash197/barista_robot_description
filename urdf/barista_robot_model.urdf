@@ -3,6 +3,9 @@
   <material name="Blue">
     <color rgba="0.0 0.0 1.0 1"/>
   </material>
+  <material name="White">
+    <color rgba="1 1 1 1"/>
+  </material>
 
   <link name="base_link"/>
   <link name="base_plate_link">
@@ -30,5 +33,110 @@
     <origin rpy="0 0 0" xyz="0 0 0"/>
     <parent link="base_link"/>
     <child link="base_plate_link"/>
+  </joint>
+  <link name="standoff_rods1_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.22" radius="0.01"/>
+      </geometry>
+      <material name="White"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.22" radius="0.01"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.1"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.00040583333333333335" ixy="0" ixz="0" iyy="0.00040583333333333335" iyz="0" izz="5e-06"/>
+    </inertial>
+  </link>
+  <gazebo reference="standoff_rods1_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+  <link name="standoff_rods2_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.22" radius="0.01"/>
+      </geometry>
+      <material name="White"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.22" radius="0.01"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.1"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.00040583333333333335" ixy="0" ixz="0" iyy="0.00040583333333333335" iyz="0" izz="5e-06"/>
+    </inertial>
+  </link>
+  <gazebo reference="standoff_rods2_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+  <link name="standoff_rods3_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.22" radius="0.01"/>
+      </geometry>
+      <material name="White"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.22" radius="0.01"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.1"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.00040583333333333335" ixy="0" ixz="0" iyy="0.00040583333333333335" iyz="0" izz="5e-06"/>
+    </inertial>
+  </link>
+  <gazebo reference="standoff_rods3_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+  <link name="standoff_rods4_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.22" radius="0.01"/>
+      </geometry>
+      <material name="White"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.22" radius="0.01"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.1"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.00040583333333333335" ixy="0" ixz="0" iyy="0.00040583333333333335" iyz="0" izz="5e-06"/>
+    </inertial>
+  </link>
+  <gazebo reference="standoff_rods4_link">
+    <material>Gazebo/White</material>
+  </gazebo>
+  <!-- Standoff Rods Joints-->
+  <joint name="standoff_rods1_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0.03 0.13 0.1875"/>
+    <parent link="base_plate_link"/>
+    <child link="standoff_rods1_link"/>
+  </joint>
+  <joint name="standoff_rods2_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="-0.03 0.13 0.1875"/>
+    <parent link="base_plate_link"/>
+    <child link="standoff_rods2_link"/>
+  </joint>
+  <joint name="standoff_rods3_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="-0.03 -0.13 0.1875"/>
+    <parent link="base_plate_link"/>
+    <child link="standoff_rods3_link"/>
+  </joint>
+  <joint name="standoff_rods4_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0.03 -0.13 0.1875"/>
+    <parent link="base_plate_link"/>
+    <child link="standoff_rods4_link"/>
   </joint>
 </robot>
