@@ -9,6 +9,7 @@ from launch.substitutions import Command
 from launch_ros.actions import Node
 from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
+from launch.actions import TimerAction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 '''
@@ -116,16 +117,23 @@ def generate_launch_description():
                    ]
     )
 
+    spawn_robot_with_delay = TimerAction(
+        period=1.0,  # Wait 1 seconds after Gazebo starts
+        actions=[spawn_robot]
+    )
+    rviz_with_delay = TimerAction(
+        period=4.0,  # Wait 4 second after starting the robot_state_publisher
+        actions=[rviz_node]
+    )
+
     # create and return launch description object
     return LaunchDescription(
-        [            
-            DeclareLaunchArgument(
-            'world',
-            default_value=[os.path.join(pkg_gazebo_ros, 'worlds', 'empty.world'), ''],
+        [   DeclareLaunchArgument( 'world',
+            default_value=[os.path.join(share_dir, 'worlds', 'barista_world.world'), ''],
             description='SDF world file'),
             gazebo,
             robot_state_publisher_node,
-            rviz_node,
-            spawn_robot
+            spawn_robot_with_delay,
+            rviz_with_delay
         ]
     )

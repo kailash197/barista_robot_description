@@ -440,7 +440,7 @@
   <link name="laser_scanner_link">
     <visual>
       <geometry>
-        <cylinder length="0.040" radius="0.03"/>
+        <mesh filename="package://barista_robot_description/meshes/hokuyo_urg_04lx.dae" scale="1.0 1.0 1.0"/>
       </geometry>
       <material name="Green"/>
     </visual>
@@ -459,14 +459,14 @@
     <material>Gazebo/Green</material>
   </gazebo>
   <joint name="laser_scanner_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.10 0.0 0.0975"/>
+    <origin rpy="0 0 0" xyz="0.10 0.0 0.0775"/>
     <parent link="base_plate_link"/>
     <child link="laser_scanner_link"/>
   </joint>
   <!-- Laser Scanner - representation of laser rays -->
   <link name="laser_scanner_ray_link"/>
   <joint name="laser_scanner_ray_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+    <origin rpy="0 0 0" xyz="0.0 0.0 0.047"/>
     <parent link="laser_scanner_link"/>
     <child link="laser_scanner_ray_link"/>
   <!-- Laser Scanner - Gazebo Plugin -->
