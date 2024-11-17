@@ -121,7 +121,7 @@ def generate_launch_description():
         [            
             DeclareLaunchArgument(
             'world',
-            default_value=[os.path.join(pkg_gazebo_ros, 'worlds', 'empty.world'), ''],
+            default_value=[os.path.join(share_dir, 'worlds', 'barista_world.world'), ''],
             description='SDF world file'),
             gazebo,
             robot_state_publisher_node,
