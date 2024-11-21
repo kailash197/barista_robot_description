@@ -10,10 +10,14 @@
     <xacro:include filename="$(find barista_robot_description)/xacro/laser_scanner.xacro"/>
 
     <!-- Arguments -->
+    <xacro:arg name="robot_name" default="barista"/>
+    <xacro:arg name="link_joint_prefix" default=""/>
+    <xacro:arg name="color" default="Blue"/>
     <xacro:arg name="include_laser" default="true"/>
 
     <!-- Properties -->
-    <xacro:property name="robot_name" value="barista_bot"/>
+    <xacro:property name="robot_name" value="$(arg robot_name)"/>
+    <xacro:property name="color" value="$(arg color)"/>
     <xacro:property name="base_plate_mass" value="0.8"/>
     <xacro:property name="base_plate_radius" value="0.178"/>
     <xacro:property name="base_plate_length" value="0.155"/>
@@ -28,7 +32,7 @@
             <geometry>
                 <cylinder radius="${base_plate_radius}" length="${base_plate_length}"/>
             </geometry>
-            <material name="Blue"/>
+            <material name="${color}"/>
         </visual>
         <collision>
             <geometry>
@@ -42,7 +46,7 @@
         </inertial>
     </link>
     <gazebo reference="base_plate_link">
-        <material>Gazebo/Blue</material>
+        <material>Gazebo/${color}</material>
     </gazebo>
     <joint name="base_link_joint" type="fixed">
         <origin rpy="0 0 0" xyz="0 0 0"/>
@@ -77,7 +81,7 @@
     </joint>
 
     <!-- Cup Holder Tray -->
-    <xacro:cup_holder_tray name="cup_holder_tray_link" color="Blue"/>
+    <xacro:cup_holder_tray name="cup_holder_tray_link" color="${color}"/>
     <joint name="cup_holder_tray_joint" type="fixed">
         <origin rpy="0 0 0" xyz="0 0 0.3425"/>
         <parent link="base_plate_link"/>
@@ -140,6 +144,7 @@
             <child link="laser_scanner_link"/>
         </joint>
         <xacro:laser_scanner_plugin
+            robot_name="${robot_name}"
             link_name="laser_scanner_ray_link"
             out_topic="scan"/>
     </xacro:if>
