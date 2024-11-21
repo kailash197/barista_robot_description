@@ -26,6 +26,9 @@ def generate_launch_description():
     share_dir = get_package_share_directory(package_description)
     install_dir = get_package_prefix(package_description)
 
+    print("Fetching URDF ==>")
+    robot_desc_path = os.path.join(get_package_share_directory(package_description), "xacro", urdf_file)
+
     # Set the path to the model files inside your package
     gazebo_models_path = os.path.join(share_dir, 'models')
 
@@ -46,51 +49,59 @@ def generate_launch_description():
             os.path.join(pkg_gazebo_ros, 'launch', 'gazebo.launch.py'),
         )
     )
+
     #robots
-    robot_1 = {'name': 'rick', 'color':'Red'}
+    robot_1 = {'name': 'morty',
+               'color':'Blue',
+               'position': [0.5, 0.5, 0.2],
+               'orientation': [0.0, 0.0, 0.0] }
+    robot_2 = {'name': 'rick',
+               'color':'Red',
+               'position': [0.0, 0.0, 0.2],
+               'orientation': [0.0, 0.0, 0.0] }
+    robots = [robot_1, robot_2]
+    spawn_nodes = list()
+    rsp_nodes = list()
 
-    #gazebo
-    position_xyz = [0.0, 0.0, 0.2]
-    orientation_rpy = [0.0, 0.0, 0.0]
-    entity_name = robot_1.get('name', 'barista_bot')
-    topic = robot_1.get('name', '')+'/robot_description'
-    spawn_robot_1 = Node(
-        package='gazebo_ros',
-        executable='spawn_entity.py',
-        name='spawn_entity',
-        output='screen',
-        arguments=['-entity', entity_name,
-                   '-x', str(position_xyz[0]),
-                   '-y', str(position_xyz[1]),
-                   '-z', str(position_xyz[2]),
-                   '-R', str(orientation_rpy[0]),
-                   '-P', str(orientation_rpy[1]),
-                   '-Y', str(orientation_rpy[2]),
-                   '-topic', topic
-                   ]
-    )
-    ####### DATA INPUT END ##########
-    print("Fetching URDF ==>")
-    robot_desc_path = os.path.join(get_package_share_directory(package_description), "xacro", urdf_file)
+    for robot in robots:
+        spawn_nodes.append(
+            Node(
+            package='gazebo_ros',
+            executable='spawn_entity.py',
+            name='spawn_entity',
+            output='screen',
+            arguments=['-entity', robot.get('name', 'barista_bot'),
+                    '-x', str(robot.get('position')[0]),
+                    '-y', str(robot.get('position')[1]),
+                    '-z', str(robot.get('position')[2]),
+                    '-R', str(robot.get('orientation')[0]),
+                    '-P', str(robot.get('orientation')[1]),
+                    '-Y', str(robot.get('orientation')[2]),
+                    '-topic', robot.get('name', '')+'/robot_description'
+                    ]
+            )
+        )
 
-    # Robot State Publisher
-    robot_state_publisher_node_1 = Node(
-        package='robot_state_publisher',
-        executable='robot_state_publisher',
-        name='robot_state_publisher_node',
-        namespace=robot_1.get('name', ''),
-        emulate_tty=True,
-        parameters=[{
-            'use_sim_time': True,
-            'frame_prefix': robot_1.get('name', '') + "/",
-            'robot_description': Command([
-                'xacro ', robot_desc_path, ' ',
-                'include_laser:=true', 
-                ' robot_name:=', robot_1.get('name', ''),
-                ' color:=', robot_1.get('color', '')
-            ])
-        }]
-    )
+        rsp_nodes.append(
+            Node(
+            package='robot_state_publisher',
+            executable='robot_state_publisher',
+            name='robot_state_publisher_node',
+            namespace=robot.get('name', ''),
+            emulate_tty=True,
+            parameters=[{
+                'use_sim_time': True,
+                'frame_prefix': robot.get('name', '') + "/",
+                'robot_description': Command([
+                    'xacro ', robot_desc_path, ' ',
+                    'include_laser:=true',
+                    ' robot_name:=', robot.get('name', ''),
+                    ' color:=', robot.get('color', '')
+                ])
+            }]
+            )
+        )
+
 
     # RVIZ Configuration
     rviz_config_dir = os.path.join(get_package_share_directory(package_description), 'rviz', 'urdf_vis.rviz')
@@ -104,7 +115,7 @@ def generate_launch_description():
 
     spawn_robot_with_delay = TimerAction(
         period=1.0,  # Wait 1 seconds after Gazebo starts
-        actions=[spawn_robot_1]
+        actions=spawn_nodes
     )
     rviz_with_delay = TimerAction(
         period=4.0,  # Wait 4 second after starting the robot_state_publisher
@@ -117,7 +128,7 @@ def generate_launch_description():
             default_value=[os.path.join(share_dir, 'worlds', 'barista_world.world'), ''],
             description='SDF world file'),
             gazebo,
-            robot_state_publisher_node_1,
+            *rsp_nodes,
             spawn_robot_with_delay,
             rviz_with_delay
         ]
