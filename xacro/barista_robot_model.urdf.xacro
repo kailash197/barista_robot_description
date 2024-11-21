@@ -11,9 +11,13 @@
 
     <!-- Arguments -->
     <xacro:arg name="include_laser" default="true"/>
+    <xacro:arg name="robot_name" default="barista"/>
+    <xacro:arg name="link_joint_prefix" default=""/>
+    <xacro:arg name="color" default="Blue"/>
 
     <!-- Properties -->
-    <xacro:property name="robot_name" value="barista_bot"/>
+    <xacro:property name="robot_name" value="$(arg robot_name)"/>
+    <xacro:property name="link_joint_prefix" value="$(arg link_joint_prefix)"/>
     <xacro:property name="base_plate_mass" value="0.8"/>
     <xacro:property name="base_plate_radius" value="0.178"/>
     <xacro:property name="base_plate_length" value="0.155"/>
@@ -22,13 +26,13 @@
     <xacro:property name="iyy" value="${(1/12.0) * base_plate_mass * (3 * pow(base_plate_radius, 2) + pow(base_plate_length, 2))}"/>
     <xacro:property name="izz" value="${0.5 * base_plate_mass * pow(base_plate_radius, 2)}"/>
 
-    <link name="base_link"/>
-    <link name="base_plate_link">
+    <link name="${link_joint_prefix}base_link"/>
+    <link name="${link_joint_prefix}base_plate_link">
         <visual>
             <geometry>
                 <cylinder radius="${base_plate_radius}" length="${base_plate_length}"/>
             </geometry>
-            <material name="Blue"/>
+            <material name="$(arg color)"/>
         </visual>
         <collision>
             <geometry>
@@ -41,89 +45,89 @@
             <inertia ixx="${ixx}" iyy="${iyy}" izz="${izz}" ixy="0" iyz="0" ixz="0"/>
         </inertial>
     </link>
-    <gazebo reference="base_plate_link">
-        <material>Gazebo/Blue</material>
+    <gazebo reference="${link_joint_prefix}base_plate_link">
+        <material>Gazebo/$(arg color)</material>
     </gazebo>
-    <joint name="base_link_joint" type="fixed">
+    <joint name="${link_joint_prefix}base_link_joint" type="fixed">
         <origin rpy="0 0 0" xyz="0 0 0"/>
-        <parent link="base_link"/>
-        <child link="base_plate_link"/>
+        <parent link="${link_joint_prefix}base_link"/>
+        <child link="${link_joint_prefix}base_plate_link"/>
     </joint>
     <!-- Standoff Rods -->
-    <xacro:standoff_rods name="standoff_rods1_link" color="White"/>
-    <xacro:standoff_rods name="standoff_rods2_link" color="White"/>
-    <xacro:standoff_rods name="standoff_rods3_link" color="White"/>
-    <xacro:standoff_rods name="standoff_rods4_link" color="White"/>
+    <xacro:standoff_rods name="${link_joint_prefix}standoff_rods1_link" color="White"/>
+    <xacro:standoff_rods name="${link_joint_prefix}standoff_rods2_link" color="White"/>
+    <xacro:standoff_rods name="${link_joint_prefix}standoff_rods3_link" color="White"/>
+    <xacro:standoff_rods name="${link_joint_prefix}standoff_rods4_link" color="White"/>
     <!-- Standoff Rods Joints-->
-    <joint name="standoff_rods1_joint" type="fixed">
+    <joint name="${link_joint_prefix}standoff_rods1_joint" type="fixed">
         <origin rpy="0 0 0" xyz="0.03 0.13 0.1875"/>
-        <parent link="base_plate_link"/>
-        <child link="standoff_rods1_link"/>
+        <parent link="${link_joint_prefix}base_plate_link"/>
+        <child link="${link_joint_prefix}standoff_rods1_link"/>
     </joint>
-    <joint name="standoff_rods2_joint" type="fixed">
+    <joint name="${link_joint_prefix}standoff_rods2_joint" type="fixed">
         <origin rpy="0 0 0" xyz="-0.03 0.13 0.1875"/>
-        <parent link="base_plate_link"/>
-        <child link="standoff_rods2_link"/>
+        <parent link="${link_joint_prefix}base_plate_link"/>
+        <child link="${link_joint_prefix}standoff_rods2_link"/>
     </joint>
-    <joint name="standoff_rods3_joint" type="fixed">
+    <joint name="${link_joint_prefix}standoff_rods3_joint" type="fixed">
         <origin rpy="0 0 0" xyz="-0.03 -0.13 0.1875"/>
-        <parent link="base_plate_link"/>
-        <child link="standoff_rods3_link"/>
+        <parent link="${link_joint_prefix}base_plate_link"/>
+        <child link="${link_joint_prefix}standoff_rods3_link"/>
     </joint>
-    <joint name="standoff_rods4_joint" type="fixed">
+    <joint name="${link_joint_prefix}standoff_rods4_joint" type="fixed">
         <origin rpy="0 0 0" xyz="0.03 -0.13 0.1875"/>
-        <parent link="base_plate_link"/>
-        <child link="standoff_rods4_link"/>
+        <parent link="${link_joint_prefix}base_plate_link"/>
+        <child link="${link_joint_prefix}standoff_rods4_link"/>
     </joint>
 
     <!-- Cup Holder Tray -->
-    <xacro:cup_holder_tray name="cup_holder_tray_link" color="Blue"/>
-    <joint name="cup_holder_tray_joint" type="fixed">
+    <xacro:cup_holder_tray name="${link_joint_prefix}cup_holder_tray_link" color="$(arg color)"/>
+    <joint name="${link_joint_prefix}cup_holder_tray_joint" type="fixed">
         <origin rpy="0 0 0" xyz="0 0 0.3425"/>
-        <parent link="base_plate_link"/>
-        <child link="cup_holder_tray_link"/>
+        <parent link="${link_joint_prefix}base_plate_link"/>
+        <child link="${link_joint_prefix}cup_holder_tray_link"/>
     </joint>
 
     <!-- Wheel Left and Right -->
-    <xacro:wheel name="left_wheel_link" color="Black"/>
-    <xacro:wheel name="right_wheel_link" color="Black"/>
+    <xacro:wheel name="${link_joint_prefix}left_wheel_link" color="Black"/>
+    <xacro:wheel name="${link_joint_prefix}right_wheel_link" color="Black"/>
     <!-- Wheel Left and Right Joints-->
-    <joint name="left_wheel_joint" type="continuous">
-        <parent link="base_plate_link"/>
-        <child link="left_wheel_link"/>
+    <joint name="${link_joint_prefix}left_wheel_joint" type="continuous">
+        <parent link="${link_joint_prefix}base_plate_link"/>
+        <child link="${link_joint_prefix}left_wheel_link"/>
         <origin xyz="0.0 0.15 -0.053" rpy="-1.57 0 0"/>
         <axis rpy="0 0 0" xyz="0 0 1"/>
         <limit effort="10000" velocity="1000"/>
         <joint_properties damping="1.0" friction="1.0"/>
     </joint>
-    <joint name="right_wheel_joint" type="continuous">
-        <parent link="base_plate_link"/>
-        <child link="right_wheel_link"/>
+    <joint name="${link_joint_prefix}right_wheel_joint" type="continuous">
+        <parent link="${link_joint_prefix}base_plate_link"/>
+        <child link="${link_joint_prefix}right_wheel_link"/>
         <origin xyz="0.0 -0.15 -0.053" rpy="-1.57 0 0"/>
         <axis rpy="0 0 0" xyz="0 0 1"/>
         <limit effort="10000" velocity="1000"/>
         <joint_properties damping="1.0" friction="1.0"/>
     </joint>
     <xacro:differential_drive_controller_plugin
-        robot_name="${robot_name}"
-        base_frame="base_link" 
-        left_joint="left_wheel_joint"
-        right_joint="right_wheel_joint"
+        robot_name="$(arg robot_name)"
+        base_frame="${link_joint_prefix}base_link" 
+        left_joint="${link_joint_prefix}left_wheel_joint"
+        right_joint="${link_joint_prefix}right_wheel_joint"
         separation="0.30"
         diameter="0.0704" />
-    <xacro:caster_wheels prefix="front"
+    <xacro:caster_wheels prefix="${link_joint_prefix}front"
         pos_x="0.150"
         pos_y="0"
         pos_z="-0.0730"
-        parent_link="base_plate_link"
+        parent_link="${link_joint_prefix}base_plate_link"
         color_roll="Red"
         color_pitch="Green"
         color_yaw="Blue" />
-    <xacro:caster_wheels prefix="back"
+    <xacro:caster_wheels prefix="${link_joint_prefix}back"
         pos_x="-0.150"
         pos_y="0"
         pos_z="-0.0730"
-        parent_link="base_plate_link"
+        parent_link="${link_joint_prefix}base_plate_link"
         color_roll="Red" 
         color_pitch="Green" 
         color_yaw="Blue" />
@@ -131,22 +135,24 @@
     <!-- Laser Scanner -->
     <xacro:if value="$(arg include_laser)">
         <xacro:laser_scanner
-            name="laser_scanner"
+            name="${link_joint_prefix}laser_scanner"
             color="Green"
             ray_pos="0.0 0.0 0.047" />
-        <joint name="laser_scanner_joint" type="fixed">
+        <joint name="${link_joint_prefix}laser_scanner_joint" type="fixed">
             <origin rpy="0 0 0" xyz="0.10 0.0 0.0775"/>
-            <parent link="base_plate_link"/>
-            <child link="laser_scanner_link"/>
+            <parent link="${link_joint_prefix}base_plate_link"/>
+            <child link="${link_joint_prefix}laser_scanner_link"/>
         </joint>
         <xacro:laser_scanner_plugin
-            link_name="laser_scanner_ray_link"
+            robot_name="$(arg robot_name)"
+            link_name="${link_joint_prefix}laser_scanner_ray_link"
             out_topic="scan"/>
     </xacro:if>
 
     <xacro:joint_state_publisher_plugin
-        robot_name="${robot_name}"
-        rate="50"
+        robot_name="$(arg robot_name)"
+        rate="10"
+        prefix="${link_joint_prefix}"
         joints="${[
             'left_wheel_joint',
             'right_wheel_joint',

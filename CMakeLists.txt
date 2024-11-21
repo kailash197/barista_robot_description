@@ -33,5 +33,9 @@ install(
   DESTINATION
     share/${PROJECT_NAME}/
 )
+install(PROGRAMS
+  scripts/barista_bot_odom_to_tf_pub.py
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 ament_package()
