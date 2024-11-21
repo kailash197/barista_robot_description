@@ -9,7 +9,6 @@ from launch.substitutions import Command
 from launch_ros.actions import Node
 from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
-from launch.actions import TimerAction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 '''
@@ -62,8 +61,10 @@ def generate_launch_description():
     robots = [robot_1, robot_2]
     spawn_nodes = list()
     rsp_nodes = list()
+    static_transforms = list()
 
     for robot in robots:
+        # Add an spawn node for each robot
         spawn_nodes.append(
             Node(
             package='gazebo_ros',
@@ -82,6 +83,7 @@ def generate_launch_description():
             )
         )
 
+        # Robot State Publisher node for each robot
         rsp_nodes.append(
             Node(
             package='robot_state_publisher',
@@ -102,6 +104,13 @@ def generate_launch_description():
             )
         )
 
+        # Static transforms for each robot with world frame
+        static_transforms.append(Node(
+                package='tf2_ros',
+                executable='static_transform_publisher',
+                arguments=['0', '0', '0', '0', '0', '0', 'world', robot.get('name', '')+'/odom']
+            )
+        )
 
     # RVIZ Configuration
     rviz_config_dir = os.path.join(get_package_share_directory(package_description), 'rviz', 'urdf_vis.rviz')
@@ -113,15 +122,6 @@ def generate_launch_description():
             parameters=[{'use_sim_time': True}],
             arguments=['-d', rviz_config_dir])
 
-    spawn_robot_with_delay = TimerAction(
-        period=1.0,  # Wait 1 seconds after Gazebo starts
-        actions=spawn_nodes
-    )
-    rviz_with_delay = TimerAction(
-        period=4.0,  # Wait 4 second after starting the robot_state_publisher
-        actions=[rviz_node]
-    )
-
     # create and return launch description object
     return LaunchDescription(
         [   DeclareLaunchArgument( 'world',
@@ -129,7 +129,8 @@ def generate_launch_description():
             description='SDF world file'),
             gazebo,
             *rsp_nodes,
-            spawn_robot_with_delay,
-            rviz_with_delay
+            *spawn_nodes,
+            *static_transforms,
+            rviz_node
         ]
     )

@@ -31,7 +31,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: LaserScan
+    SyncSource: MortyLaserScan
 Visualization Manager:
   Class: ""
   Displays:
@@ -322,8 +322,8 @@ Visualization Manager:
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 0.22362013161182404
-        Min Value: 0.20848438143730164
+        Max Value: 0.22332645952701569
+        Min Value: 0.20521780848503113
         Value: true
       Axis: Z
       Channel Name: intensity
@@ -356,7 +356,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: morty/odom
+    Fixed Frame: world
     Frame Rate: 30
   Name: root
   Tools:

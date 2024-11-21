@@ -151,7 +151,7 @@
 
     <xacro:joint_state_publisher_plugin
         robot_name="${robot_name}"
-        rate="50"
+        rate="10"
         joints="${[
             'left_wheel_joint',
             'right_wheel_joint',
