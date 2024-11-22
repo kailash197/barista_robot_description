@@ -52,7 +52,7 @@ def generate_launch_description():
     #robots
     robot_1 = {'name': 'morty',
                'color':'Blue',
-               'position': [0.5, 0.5, 0.2],
+               'position': [1.0, 1.0, 0.2],
                'orientation': [0.0, 0.0, 0.0] }
     robot_2 = {'name': 'rick',
                'color':'Red',
@@ -125,7 +125,7 @@ def generate_launch_description():
     # create and return launch description object
     return LaunchDescription(
         [   DeclareLaunchArgument( 'world',
-            default_value=[os.path.join(share_dir, 'worlds', 'barista_world.world'), ''],
+            default_value=[os.path.join(pkg_gazebo_ros, 'worlds', 'empty.world'), ''],
             description='SDF world file'),
             gazebo,
             *rsp_nodes,
