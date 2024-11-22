@@ -1,5 +1,6 @@
 #include "rclcpp/rclcpp.hpp"
 #include "nav_msgs/msg/odometry.hpp"
+#include "geometry_msgs/msg/twist.hpp"
 #include "tf2_ros/buffer.h"
 #include "tf2_ros/transform_listener.h"
 
@@ -14,6 +15,13 @@ class RobotChaser : public rclcpp::Node {
         const std::string target_frame = "rick/base_link";
         const std::string source_frame = "morty/base_link";
 
+        const double kp_yaw = 1.0 ;
+        const double kp_distance = 1.0 ;
+
+        rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_pub_;
+        geometry_msgs::msg::Twist cmd_vel_;
+        const std::string pub_topic_ = "rick/cmd_vel";
+
         rclcpp::TimerBase::SharedPtr timer_;
         void getTransform();
 
@@ -23,6 +31,7 @@ class RobotChaser : public rclcpp::Node {
         tf_buffer_(this->get_clock()),
         tf_listener_(tf_buffer_){
             timer_ = this->create_wall_timer(500ms, std::bind(&RobotChaser::getTransform, this));
+            cmd_vel_pub_ = create_publisher<geometry_msgs::msg::Twist>(pub_topic_, 10);
             RCLCPP_INFO(this->get_logger(), "Robot chaser ready!!!");
         }
 };
@@ -45,18 +54,16 @@ void RobotChaser::getTransform(){
     double dz = transform.transform.translation.z;
     double distance = std::sqrt(dx * dx + dy * dy + dz * dz);
 
-    // Calculate yaw (rotation about Z-axis)
-    tf2::Quaternion q(
-        transform.transform.rotation.x,
-        transform.transform.rotation.y,
-        transform.transform.rotation.z,
-        transform.transform.rotation.w);
-    tf2::Matrix3x3 mat(q);
-    double roll, pitch, yaw;
-    mat.getRPY(roll, pitch, yaw);
+    // Calculate angle (rotation about Z-axis)
+    double yaw = atan2(transform.transform.translation.y, transform.transform.translation.x);
 
+    this->cmd_vel_.linear.x = kp_distance * distance;
+    this->cmd_vel_.angular.z = kp_yaw * yaw;
+    this->cmd_vel_pub_->publish(this->cmd_vel_);
     RCLCPP_INFO(this->get_logger(),
     "Transform Distance: %.2f m, Yaw: %.2f rads", distance, yaw);
+    RCLCPP_INFO(this->get_logger(),
+    "Linear: %.2f m/s, Angular: %.2f rad/s", this->cmd_vel_.linear.x, this->cmd_vel_.angular.z);
 }
 
 int main(int argc, char ** argv) {
