@@ -6,6 +6,7 @@
 
 #include <chrono>
 using namespace std::chrono_literals;
+constexpr double PROXIMITY_LIMIT = 0.37;
 
 class RobotChaser : public rclcpp::Node {
     private:
@@ -14,9 +15,6 @@ class RobotChaser : public rclcpp::Node {
 
         const std::string target_frame = "rick/base_link";
         const std::string source_frame = "morty/base_link";
-
-        const double kp_yaw = 1.0 ;
-        const double kp_distance = 1.0 ;
 
         rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_pub_;
         geometry_msgs::msg::Twist cmd_vel_;
@@ -30,7 +28,7 @@ class RobotChaser : public rclcpp::Node {
         Node("robot_chaser_node"),
         tf_buffer_(this->get_clock()),
         tf_listener_(tf_buffer_){
-            timer_ = this->create_wall_timer(500ms, std::bind(&RobotChaser::getTransform, this));
+            timer_ = this->create_wall_timer(100ms, std::bind(&RobotChaser::getTransform, this));
             cmd_vel_pub_ = create_publisher<geometry_msgs::msg::Twist>(pub_topic_, 10);
             RCLCPP_INFO(this->get_logger(), "Robot chaser ready!!!");
         }
@@ -55,15 +53,34 @@ void RobotChaser::getTransform(){
     double distance = std::sqrt(dx * dx + dy * dy + dz * dz);
 
     // Calculate angle (rotation about Z-axis)
-    double yaw = atan2(transform.transform.translation.y, transform.transform.translation.x);
+    double yaw = atan2(dy, dx);
 
-    this->cmd_vel_.linear.x = kp_distance * distance;
-    this->cmd_vel_.angular.z = kp_yaw * yaw;
+    // assign velocities
+    double kp_distance = 1.0;
+    double kp_yaw = 1.0;
+    double linear_vel = 0.0;
+    double angular_vel = 0.0;
+
+    if (distance > PROXIMITY_LIMIT){
+        if(distance > 1.0 ){
+            kp_distance = 1.0;
+            kp_yaw = 1.0;
+        } else {
+            kp_distance = 0.5;
+            kp_yaw=0.5;
+        }
+        if (fabs(yaw) > M_PI / 6.0){
+            kp_distance *= 0.5;
+            kp_yaw *= 1.2;
+        }
+
+        linear_vel = kp_distance * distance;
+        angular_vel = kp_yaw * yaw;
+    }
+
+    this->cmd_vel_.linear.x = linear_vel;
+    this->cmd_vel_.angular.z = angular_vel;
     this->cmd_vel_pub_->publish(this->cmd_vel_);
-    RCLCPP_INFO(this->get_logger(),
-    "Transform Distance: %.2f m, Yaw: %.2f rads", distance, yaw);
-    RCLCPP_INFO(this->get_logger(),
-    "Linear: %.2f m/s, Angular: %.2f rad/s", this->cmd_vel_.linear.x, this->cmd_vel_.angular.z);
 }
 
 int main(int argc, char ** argv) {
