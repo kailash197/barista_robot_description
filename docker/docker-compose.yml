@@ -1,0 +1,40 @@
+---
+services:
+  barista-dev:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: barista-dev:latest
+    container_name: barista-dev
+    network_mode: "host"
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - XAUTHORITY=/tmp/.docker.xauth
+      - XDG_RUNTIME_DIR=/tmp/runtime-root
+    devices:
+      - /dev/dri
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ../robot_chaser/:/home/vscode/ros2_ws/src/robot_chaser/
+      - ../robot_description/:/home/vscode/ros2_ws/src/robot_description/
+    stdin_open: true
+    tty: true
+
+  barista-dev-nvidia:
+    extends:
+      service: barista-dev
+    container_name: barista-dev-nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+    devices:
+      - /dev/dri
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]

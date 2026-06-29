@@ -1,0 +1,13 @@
+apt-utils
+bash-completion
+curl
+debian-archive-keyring
+debian-keyring
+locales
+lsb-release
+python3-pip
+python3-setuptools
+software-properties-common
+tree
+ros-humble-gazebo-ros-pkgs
+tmux
