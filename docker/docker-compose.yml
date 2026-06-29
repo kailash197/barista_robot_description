@@ -18,6 +18,7 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ../robot_chaser/:/home/vscode/ros2_ws/src/robot_chaser/
       - ../robot_description/:/home/vscode/ros2_ws/src/robot_description/
+      - ../startup/:/home/vscode/ros2_ws/startup/
     stdin_open: true
     tty: true
 

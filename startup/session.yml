@@ -1,0 +1,22 @@
+name: CHASER
+root: ./barista_robot/
+
+# Optional: Set environment before starting
+pre_window: cd ~/ros2_ws; source /opt/ros/humble/setup.bash; source ~/ros2_ws/install/setup.bash
+
+windows:
+  # Window 0: Main simulation (Gazebo + Rviz2)
+  - sim:
+      layout: even-horizontal  # Panes side by side
+      panes:
+        - ros2 launch barista_robot_description barista_two_robots.launch.py
+        - ros2 run robot_chaser robot_chaser
+
+  # Window 1: Control & Monitoring
+  - control:
+      layout: tiled  # 4 panes in a grid
+      panes:
+        - ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:=/morty/cmd_vel
+        - "#cd startup; ros2 run tf2_tools view_frames"
+        - "#top"
+        - "#ros2 run tf2_ros tf2_echo rick/base_link morty/base_link"

@@ -59,11 +59,6 @@ ros2 run tf2_tools view_frames
 ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:=/rick/cmd_vel
 ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args --remap cmd_vel:=/morty/cmd_vel
 
-ros2 run tf2_ros tf2_monitor camera_bot_base_link rgb_camera_link_frame
-
-
-ros2 run <your_package_name> <your_executable> --ros-args -p robot_base_frame:="morty/base_link" -p odom_topic:="/morty/odom"
-
 source install/setup.bash && ros2 run barista_robot_description barista_bot_odom_to_tf_pub.py --ros-args -p robot_base_frame:="morty/odom" -p odom_topic:="/morty/odom"
 ros2 run tf2_ros tf2_echo rick/base_link morty/base_link
 ```

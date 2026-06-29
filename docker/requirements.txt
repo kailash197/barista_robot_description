@@ -11,3 +11,4 @@ software-properties-common
 tree
 ros-humble-gazebo-ros-pkgs
 tmux
+tmuxinator
